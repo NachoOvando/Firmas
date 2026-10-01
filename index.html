@@ -128,7 +128,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break
 
 <section class="step" aria-labelledby="h-2">
   <div><span class="eyebrow">Paso 2</span><h2 id="h-2">Mirá cómo queda</h2>
-  <p class="lead">Así se ve tu firma con fondo blanco y con el modo oscuro de Gmail. Cada vez que cambies un dato, se actualiza sola.</p></div>
+  <p class="lead">Así se ve tu firma con fondo blanco y con el modo oscuro de Gmail. Cada vez que cambies un dato, se actualiza sola. La letra que ves es la que usa la mayoría de las computadoras; quien tenga instaladas Work Sans y Syne la ve con esas tipografías.</p></div>
   <div class="panel"><span class="tag">Con fondo claro</span><div class="mail light" id="pl"></div></div>
   <div class="panel"><span class="tag" id="dark-tag">Con modo oscuro</span><div class="mail dark" id="pd"></div><p class="hint" id="dark-note">El texto negro pasa a blanco solo en Gmail y Outlook del celular, y en otros programas con modo oscuro automático. En Gmail de la computadora el fondo es siempre blanco, así que el texto queda negro. Un programa sin modo oscuro automático dejaría el texto oscuro sobre oscuro.</p></div>
   <ul class="checks" id="checks" aria-live="polite"></ul>
@@ -224,6 +224,13 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break
           <option value="imagen">Siempre imagen</option>
         </select>
       </label>
+      <label for="o-font">Tipografía de reemplazo
+        <select id="o-font">
+          <option value="moderna">Moderna (Segoe UI o Helvetica Neue)</option>
+          <option value="ancha">Ancha (Verdana)</option>
+          <option value="clasica">Clásica (Arial)</option>
+        </select>
+      </label>
       <label for="o-host">Imágenes
         <select id="o-host">
           <option value="url">Imágenes en internet (recomendado)</option>
@@ -252,11 +259,12 @@ const FILES={logo:"wecc-logo.png",ig:{neutral:"instagram_neutral.png",original:"
 const ORANGE="#DA5933";
 const MODES={adaptable:{ink:"#2E2E2E",key:"neutral"},universal:{ink:"#808080",key:"neutral"},original:{ink:"#2E2E2E",key:"original"}};
 const INVERT="#E8EAED";
+const FONTSETS={moderna:"'Segoe UI','Helvetica Neue',Arial,sans-serif",ancha:"Verdana,Geneva,Arial,sans-serif",clasica:"Arial,Helvetica,sans-serif"};
 const KEY="wecc-firmas-v3",KEY2="wecc-firmas-v2";
 const BLANK={nombre:"",cargo:"",telefono:"",web:"",instagram:"",linkedin:"",hideIg:false,hideLi:false};
 const DEF={
   empresa:{web:"wecc.io",instagram:"https://www.instagram.com/",linkedin:"https://www.linkedin.com/"},
-  opts:{mode:"adaptable",name:"auto",host:"url",base:"https://raw.githubusercontent.com/NachoOvando/Firmas/Wecc"},
+  opts:{mode:"adaptable",name:"auto",font:"moderna",host:"url",base:"https://raw.githubusercontent.com/NachoOvando/Firmas/Wecc"},
   emps:[{...BLANK,id:"e1",nombre:"Daiana Suligoy",cargo:"Founder & Business Developer",telefono:"+54 3412 116707"}],
   sel:"e1",synced:"",ignored:"",dirty:false
 };
@@ -304,7 +312,7 @@ async function nameImg(text,mode){
 const nameFile=e=>"nombre-"+slug(e.nombre||"")+"-"+(S.opts.mode==="universal"?"blanco":"original")+".png";
 
 function sig(e,o){
-  const ink=MODES[S.opts.mode].ink,F="font-family:Arial,Helvetica,sans-serif;";
+  const ink=MODES[S.opts.mode].ink,FB=FONTSETS[S.opts.font]||FONTSETS.moderna,F="font-family:"+(o.brand?"'Work Sans',":"")+FB+";",FN="font-family:"+(o.brand?"'Syne',":"")+FB+";";
   const web=(e.web||S.empresa.web||"").trim();
   const ig=e.hideIg?"":(e.instagram||S.empresa.instagram||"").trim(),li=e.hideLi?"":(e.linkedin||S.empresa.linkedin||"").trim();
   const tel=(e.telefono||"").trim(),telHref=tel.replace(/[^\d+]/g,"");
@@ -312,7 +320,7 @@ function sig(e,o){
   const im=(src,w,h,alt)=>'<img src="'+esc(src)+'" width="'+w+'" height="'+h+'" alt="'+esc(alt)+'" style="display:block;border:0;width:'+w+'px;height:'+h+'px;">';
   const nombre=(e.nombre||"").trim();
   let rows=o.nm?'<tr><td style="padding:0 0 4px 0;">'+im(o.nm.src,o.nm.w,o.nm.h,nombre)+'</td></tr>'
-    :'<tr><td style="padding:0 0 4px 0;'+F+'font-size:24px;line-height:28px;font-weight:bold;letter-spacing:-0.3px;color:'+ink+';">'+esc(nombre)+'</td></tr>';
+    :'<tr><td style="padding:0 0 4px 0;'+FN+'font-size:24px;line-height:28px;font-weight:bold;letter-spacing:-0.3px;color:'+ink+';">'+esc(nombre)+'</td></tr>';
   if(e.cargo)rows+='<tr><td style="padding:0 0 12px 0;'+F+'font-size:14px;line-height:18px;font-weight:bold;color:'+ORANGE+';">'+esc(e.cargo)+'</td></tr>';
   if(tel)rows+='<tr><td style="padding:0;'+F+'font-size:13px;line-height:20px;color:'+ink+';">'+link("tel:"+telHref,tel,ink)+'</td></tr>';
   if(web)rows+='<tr><td style="padding:0;'+F+'font-size:13px;line-height:20px;color:'+ink+';">'+link("https://"+bare(web),bare(web),ink)+'</td></tr>';
@@ -353,9 +361,9 @@ async function refresh(){
     fontBad=!cv.fontOk;nmPrev={src:cv.url,w:cv.w,h:cv.h};
     nmOut=hosted?{src:base+"/"+file,w:remoteOk?Math.round(nameR.w/3):cv.w,h:remoteOk?Math.round(nameR.h/3):cv.h}:nmPrev;
   }
-  const prev=sig(e,{logo:ASSETS.logo,ig:ASSETS.ig[ico],li:ASSETS.li[ico],nm:nmPrev});
-  const out=hosted?sig(e,{logo:base+"/"+FILES.logo,ig:base+"/"+FILES.ig[ico],li:base+"/"+FILES.li[ico],nm:nmOut})
-                  :sig(e,{logo:LITE.logo,ig:LITE.ig[ico],li:LITE.li[ico],nm:nmOut});
+  const prev=sig(e,{brand:false,logo:ASSETS.logo,ig:ASSETS.ig[ico],li:ASSETS.li[ico],nm:nmPrev});
+  const out=hosted?sig(e,{brand:true,logo:base+"/"+FILES.logo,ig:base+"/"+FILES.ig[ico],li:base+"/"+FILES.li[ico],nm:nmOut})
+                  :sig(e,{brand:true,logo:LITE.logo,ig:LITE.ig[ico],li:LITE.li[ico],nm:nmOut});
   outHtml=out;
   const say='<p class="say">Saludos,</p>';
   const prevDark=S.opts.mode==="adaptable"?prev.split(MODES.adaptable.ink).join(INVERT):prev;
@@ -415,7 +423,7 @@ $("del").onclick=()=>{
 };
 
 /* Ajustes */
-["mode","name","host"].forEach(k=>{const el=$("o-"+k);el.value=S.opts[k];el.addEventListener("change",()=>{S.opts[k]=el.value;syncBase();save();refresh();if($("admin").open)renderNames()})});
+["mode","name","font","host"].forEach(k=>{const el=$("o-"+k);el.value=S.opts[k];el.addEventListener("change",()=>{S.opts[k]=el.value;syncBase();save();refresh();if($("admin").open)renderNames()})});
 $("o-base").value=S.opts.base;$("o-base").addEventListener("input",()=>{S.opts.base=$("o-base").value.trim();save();refresh()});
 function syncBase(){$("o-base-l").hidden=S.opts.host!=="url"}
 
