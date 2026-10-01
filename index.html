@@ -130,7 +130,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break
   <div><span class="eyebrow">Paso 2</span><h2 id="h-2">Mirá cómo queda</h2>
   <p class="lead">Así se ve tu firma con fondo blanco y con el modo oscuro de Gmail. Cada vez que cambies un dato, se actualiza sola.</p></div>
   <div class="panel"><span class="tag">Con fondo claro</span><div class="mail light" id="pl"></div></div>
-  <div class="panel"><span class="tag">Con modo oscuro</span><div class="mail dark" id="pd"></div></div>
+  <div class="panel"><span class="tag" id="dark-tag">Con modo oscuro</span><div class="mail dark" id="pd"></div><p class="hint" id="dark-note">El texto negro pasa a blanco solo en Gmail y Outlook del celular, y en otros programas con modo oscuro automático. En Gmail de la computadora el fondo es siempre blanco, así que el texto queda negro. Un programa sin modo oscuro automático dejaría el texto oscuro sobre oscuro.</p></div>
   <ul class="checks" id="checks" aria-live="polite"></ul>
 </section>
 
@@ -158,11 +158,11 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break
   <details><summary>En Gmail no aparecen las imágenes</summary><div>
     <p>Las imágenes se bajan de internet cuando alguien abre el mail. Si no aparecen, puede que falte subirlas o que Gmail pida «Mostrar imágenes» la primera vez. Avisale a quien administra las firmas y contale en qué mail lo viste.</p></div></details>
   <details><summary>Mi nombre no tiene la letra de la marca</summary><div>
-    <p>La letra de la marca solo se puede usar si el nombre está guardado como imagen en el repositorio. Mientras tanto se muestra con una letra común y se ve bien igual. Cuando administración suba la imagen de tu nombre, aparece sola: tocá «Volver a comprobar» en el paso 2.</p></div></details>
+    <p>Con los colores «Adaptable» el nombre va en texto común, porque una imagen no cambia de color con el modo oscuro. La letra de la marca solo se puede usar si el nombre está guardado como imagen en el repositorio. Mientras tanto se muestra en gris con una letra común, que se ve bien igual. Cuando administración suba la imagen de tu nombre, aparece sola: tocá «Volver a comprobar» en el paso 2.</p></div></details>
   <details><summary>Gmail dice que la firma es demasiado larga</summary><div>
     <p>Pasa cuando las imágenes van incrustadas en la firma. En «Ajustes de administración» tiene que estar elegido «Imágenes en internet». Si ya lo está, avisale a quien administra.</p></div></details>
   <details><summary>Se ve mal en modo oscuro</summary><div>
-    <p>Gmail no deja que la firma cambie de color sola. Por eso el nombre, los textos y los íconos son de un gris medio que se lee sobre fondo claro y oscuro, y el logo mantiene el naranja de la marca.</p></div></details>
+    <p>Una firma de Gmail no puede cambiar de color por sí sola. Con los colores «Adaptable», el nombre, el teléfono y la web van en texto negro, y las apps de Gmail y Outlook del celular lo pasan a blanco cuando el modo oscuro está activo. Los íconos son de un gris medio que se lee en los dos casos, y el logo mantiene el naranja de la marca.</p></div></details>
   <details><summary>Quiero cambiar mi cargo o mi teléfono</summary><div>
     <p>Corregilo en el paso 1 y volvé a copiar la firma. En Gmail borrá todo lo que haya en el cuadro de firma antes de pegar la nueva.</p></div></details>
   <details><summary>Perdí los datos que había cargado</summary><div>
@@ -212,7 +212,8 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break
     <div class="grid2">
       <label for="o-mode">Colores
         <select id="o-mode">
-          <option value="universal">Claro y oscuro (gris medio)</option>
+          <option value="adaptable">Adaptable: negro en fondo claro, blanco en modo oscuro (recomendado)</option>
+          <option value="universal">Nombre blanco con contorno, textos grises</option>
           <option value="original">Solo fondo claro (gris original)</option>
         </select>
       </label>
@@ -249,17 +250,18 @@ const LITE={logo:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAACrAgMAAAB9
   li:{neutral:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAElBMVEUAAABwcHB4eHh1dXV1dXWmpqb5IPT+AAAABnRSTlMAD/CfWwNcmawPAAABmklEQVR42lWST08TYRCHn3l3CRJjd7a0NB660oULFyj1A9jyBVgPfF57NjEY/xw8gK1eMFF3XuJhi3ZfD9sWmOOTJ/nNbzICIInfHbK8NDVAAAmdzADJ3qiBA5JOy9plOQjz8coSBu6nATKZ/cYA9OxQ6abpBXJ2KAAS5yoAoJIPFdDx6ZY2SIrdSBCJXvwy1iOnrfdx4mq/ISSzxDvZLxNIV8iXrhP9e3JTQbXW9HnfndcAnWLNZj760btB4r1ta8TF3bY7VoWASdpt1vwe315DqNMrA9RgmTvDgHTYmXQmBoEQtasKcVfsve35E6tg4Jrqubp9mHsocPebl0QAOHRdr2k6xYXAo/HmdKM1LuJaw8dWNHcfzB6SEPrOe4E6n33L4rwPmiQi+fXDAM1b7jx5pciFdl/TLZA//jPaHsi9VLQHEi3+pvXmpnw56pmgo/LT0yZVksgvA2zFuYoCiEo+ViLq1tFdbbqzswiLye1lBSAyOmis0YEWzX8RZ7SffTz5SjbdvFx8bLPMSX+qtrIk8fqSd8EnBvwHNaWJPngsFosAAAAASUVORK5CYII=",original:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAElBMVEUvLy8yMjItLS0tLS1gYGAAAAAXKIUyAAAABnRSTlPxF59bAgDVVNSeAAABwklEQVR42l2SW2sTURSFv3MpJKTUk3hBMTUnqVVJQdqIPoU2vgj6qv2d/gCpJiUUpOYCPlgFzTQU1NZ0zoRCsczM8WESqa7Hj71Za2+W2AZ8tLhrSY+2IgNowIt0MJmA/HrXmQyJdIeVU6r9gS7PpuLXqtQAKqP9oJWhkSq1nMHrKh8BCemw1MSAoFtNhqDW2nH+iQYAu5v7fk+qeqWjxzZDlO15go72fYu5NO7wpZouLQSWMJ+xuPr5lnr+/lkNZgS5e13J0Gvg7Xy15UIVLt/E+16B3Mx1T1rjSDxuENIGvJAqd/IAmV5Mn+axgEgOlCtYSC+K/WSYlID0k5ZbEIvewu0BE23hzMqZkwX44MEg/yaniEzIPjFPmd3lkGmHf7QYSMt/ktJYdxl4KWTgzGUkfKpe7NWRaeHn7/umcOMa7CxrL2KNrtWAGtA2Rp7dOWrjQ8KQ0BFvjisad/gKUaQIRdBvPKpRPTgO5kni1K0KLToPo/W5XzeJNrSktTLqxlm2dvO0oZEg1ydd8wve0RwpC2oNrpz/OK5DNR58uWqzmnQ3g5P+0rjS53EZENsAaS8A5CPLrF/46UZU45uuOAP8AQ7IqSxKYUwaAAAAAElFTkSuQmCC"}};
 const FILES={logo:"wecc-logo.png",ig:{neutral:"instagram_neutral.png",original:"instagram_original.png"},li:{neutral:"linkedin_neutral.png",original:"linkedin_original.png"}};
 const ORANGE="#DA5933";
-const MODES={universal:{ink:"#808080",key:"neutral"},original:{ink:"#2E2E2E",key:"original"}};
-const KEY="wecc-firmas-v2";
+const MODES={adaptable:{ink:"#2E2E2E",key:"neutral"},universal:{ink:"#808080",key:"neutral"},original:{ink:"#2E2E2E",key:"original"}};
+const INVERT="#E8EAED";
+const KEY="wecc-firmas-v3",KEY2="wecc-firmas-v2";
 const BLANK={nombre:"",cargo:"",telefono:"",web:"",instagram:"",linkedin:"",hideIg:false,hideLi:false};
 const DEF={
   empresa:{web:"wecc.io",instagram:"https://www.instagram.com/",linkedin:"https://www.linkedin.com/"},
-  opts:{mode:"universal",name:"auto",host:"url",base:"https://raw.githubusercontent.com/NachoOvando/Firmas/Wecc"},
+  opts:{mode:"adaptable",name:"auto",host:"url",base:"https://raw.githubusercontent.com/NachoOvando/Firmas/Wecc"},
   emps:[{...BLANK,id:"e1",nombre:"Daiana Suligoy",cargo:"Founder & Business Developer",telefono:"+54 3412 116707"}],
   sel:"e1",synced:"",ignored:"",dirty:false
 };
 let S=JSON.parse(JSON.stringify(DEF)),outHtml="",tok=0,manualDiv=null;
-try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);if(p&&Array.isArray(p.emps)&&p.emps.length){S={...DEF,...p,empresa:{...DEF.empresa,...p.empresa},opts:{...DEF.opts,...p.opts},emps:p.emps.map(e=>({...BLANK,...e}))};if(!S.emps.some(e=>e.id===S.sel))S.sel=S.emps[0].id}}}catch(e){}
+try{let r=localStorage.getItem(KEY),legacy=false;if(!r){r=localStorage.getItem(KEY2);legacy=!!r}if(r){const p=JSON.parse(r);if(legacy&&p&&p.opts)p.opts.mode="adaptable";if(p&&Array.isArray(p.emps)&&p.emps.length){S={...DEF,...p,empresa:{...DEF.empresa,...p.empresa},opts:{...DEF.opts,...p.opts},emps:p.emps.map(e=>({...BLANK,...e}))};if(!S.emps.some(e=>e.id===S.sel))S.sel=S.emps[0].id}}}catch(e){}
 const $=id=>document.getElementById(id);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const cur=()=>S.emps.find(e=>e.id===S.sel)||S.emps[0];
@@ -283,19 +285,23 @@ function probe(url,force){
 
 /* Nombre en Syne Bold dibujado en canvas a 3x */
 const nameCache=new Map();
-async function nameImg(text,color){
-  const k=text+"|"+color;if(nameCache.has(k))return nameCache.get(k);
+async function nameImg(text,mode){
+  const k=text+"|"+mode;if(nameCache.has(k))return nameCache.get(k);
   try{await document.fonts.load("700 26px Syne",text)}catch(e){}
   const fontOk=[...document.fonts].some(f=>f.family.replace(/["']/g,"")==="Syne"&&f.status==="loaded");
-  const sc=3,fs=26,H=34,c=document.createElement("canvas");let x=c.getContext("2d");
-  x.font="700 "+fs*sc+"px Syne, Arial, sans-serif";
-  const w=Math.ceil(x.measureText(text).width/sc)+1;
+  const sc=3,fs=26,H=34,pad=2,c=document.createElement("canvas"),FONT="700 "+fs*sc+"px Syne, Arial, sans-serif";let x=c.getContext("2d");
+  x.font=FONT;
+  const w=Math.ceil(x.measureText(text).width/sc)+1+pad*2;
   c.width=w*sc;c.height=H*sc;x=c.getContext("2d");
-  x.font="700 "+fs*sc+"px Syne, Arial, sans-serif";x.fillStyle=color;x.textBaseline="alphabetic";
-  x.fillText(text,0,(H/2+fs*.35)*sc);
+  x.font=FONT;x.textBaseline="alphabetic";x.lineJoin="round";
+  const y=(H/2+fs*.35)*sc,xx=pad*sc;
+  /* Universal: letras blancas con contorno fino gris oscuro. Original: gris oscuro liso. */
+  if(mode==="universal"){x.lineWidth=2.4*sc;x.strokeStyle="#2E2E2E";x.strokeText(text,xx,y);x.fillStyle="#FFFFFF"}
+  else x.fillStyle="#2E2E2E";
+  x.fillText(text,xx,y);
   const r={url:c.toDataURL("image/png"),w,h:H,fontOk};if(fontOk)nameCache.set(k,r);return r;
 }
-const nameFile=e=>"nombre-"+slug(e.nombre||"")+"-"+S.opts.mode+".png";
+const nameFile=e=>"nombre-"+slug(e.nombre||"")+"-"+(S.opts.mode==="universal"?"blanco":"original")+".png";
 
 function sig(e,o){
   const ink=MODES[S.opts.mode].ink,F="font-family:Arial,Helvetica,sans-serif;";
@@ -334,15 +340,16 @@ function renderChecks(list){
 async function refresh(){
   const t=++tok,e=cur(),m=MODES[S.opts.mode],ico=m.key;
   const base=S.opts.base.replace(/\/$/,""),hosted=S.opts.host==="url",want=S.opts.name,nombre=(e.nombre||"").trim(),file=nameFile(e);
+  const wantImg=want==="imagen"||(want==="auto"&&S.opts.mode!=="adaptable");
   let logoP=null,nameP=null;
-  if(hosted){logoP=probe(base+"/"+FILES.logo);if(nombre&&want!=="texto")nameP=probe(base+"/"+file)}
+  if(hosted){logoP=probe(base+"/"+FILES.logo);if(nombre&&wantImg)nameP=probe(base+"/"+file)}
   const [logoR,nameR]=await Promise.all([logoP,nameP]);
   if(t!==tok)return;
   const remoteOk=!!(nameR&&nameR.ok);
-  const useImg=!!nombre&&(want==="imagen"||(want==="auto"&&hosted&&remoteOk));
+  const useImg=!!nombre&&(want==="imagen"||(wantImg&&hosted&&remoteOk));
   let nmPrev=null,nmOut=null,fontBad=false;
   if(useImg){
-    const cv=await nameImg(nombre,m.ink);if(t!==tok)return;
+    const cv=await nameImg(nombre,S.opts.mode);if(t!==tok)return;
     fontBad=!cv.fontOk;nmPrev={src:cv.url,w:cv.w,h:cv.h};
     nmOut=hosted?{src:base+"/"+file,w:remoteOk?Math.round(nameR.w/3):cv.w,h:remoteOk?Math.round(nameR.h/3):cv.h}:nmPrev;
   }
@@ -351,7 +358,10 @@ async function refresh(){
                   :sig(e,{logo:LITE.logo,ig:LITE.ig[ico],li:LITE.li[ico],nm:nmOut});
   outHtml=out;
   const say='<p class="say">Saludos,</p>';
-  $("pl").innerHTML=say+'<div class="sig">'+prev+'</div>';$("pd").innerHTML=say+'<div class="sig">'+prev+'</div>';
+  const prevDark=S.opts.mode==="adaptable"?prev.split(MODES.adaptable.ink).join(INVERT):prev;
+  $("pl").innerHTML=say+'<div class="sig">'+prev+'</div>';$("pd").innerHTML=say+'<div class="sig">'+prevDark+'</div>';
+  $("dark-tag").textContent=S.opts.mode==="adaptable"?"Con modo oscuro, en el celular (el texto se invierte solo)":"Con modo oscuro";
+  $("dark-note").hidden=S.opts.mode!=="adaptable";
   $("code").value=out;
   const n=out.length;
   $("size-hint").textContent="La firma pesa "+n.toLocaleString("es-AR")+" caracteres. Gmail acepta hasta unos 10.000 en el cuadro de firma.";
@@ -364,7 +374,7 @@ async function refresh(){
   if(!e.hideIg&&igU&&generic(igU))L.push({lvl:"warn",text:"El ícono de Instagram lleva a la página general de Instagram, no a una cuenta. Cargá la cuenta en «Más opciones» del paso 1 o marcá «No mostrar»."});
   if(!e.hideLi&&liU&&generic(liU))L.push({lvl:"warn",text:"El ícono de LinkedIn lleva a la página general de LinkedIn, no a un perfil. Cargá tu perfil en «Más opciones» del paso 1 o marcá «No mostrar»."});
   if(hosted&&logoR&&!logoR.ok)L.push({lvl:"warn",text:"No pude comprobar que las imágenes de la marca estén en internet. Si en Gmail se ven rotas, avisale a quien administra.",action:recheck});
-  if(nombre&&want==="auto"&&hosted&&nameR&&!nameR.ok&&logoR&&logoR.ok)L.push({lvl:"warn",text:"Tu nombre va con letra común porque la imagen con la letra de la marca todavía no está subida. Se ve bien igual. Cuando administración la suba, aparece sola.",action:recheck});
+  if(nombre&&wantImg&&want==="auto"&&hosted&&nameR&&!nameR.ok&&logoR&&logoR.ok)L.push({lvl:"warn",text:"Tu nombre va con letra común porque la imagen con la letra de la marca todavía no está subida. Se ve bien igual. Cuando administración la suba, aparece sola.",action:recheck});
   if(fontBad)L.push({lvl:"warn",text:"La letra de la marca no se cargó en este navegador, así que la imagen del nombre no es la definitiva. Revisá la conexión y recargá la página."});
   if(n>10000)L.push({lvl:"err",text:"La firma es demasiado larga para el cuadro de Gmail. Avisale a quien administra: hay que usar las imágenes en internet."});
   if(!L.some(x=>x.lvl==="err"||x.lvl==="warn"))L.push({lvl:"ok",text:"Todo listo para copiar."});
@@ -459,11 +469,12 @@ let missingItems=[];
 async function renderNames(){
   const box=$("names"),sum=$("names-sum"),zb=$("names-zip");box.innerHTML="";zb.hidden=true;$("names-msg").textContent="";
   const base=S.opts.base.replace(/\/$/,""),m=MODES[S.opts.mode],list=S.emps.filter(e=>(e.nombre||"").trim());
+  if(S.opts.mode==="adaptable"&&S.opts.name!=="imagen"){sum.textContent="Con los colores «Adaptable» el nombre va en texto: no hace falta subir imágenes de nombres.";return}
   if(!list.length){sum.textContent="Todavía no hay personas con nombre cargado.";return}
   sum.textContent="Comprobando qué imágenes ya están subidas…";
   const rs=await Promise.all(list.map(e=>probe(base+"/"+nameFile(e),true)));
   const items=[];
-  for(let i=0;i<list.length;i++){const cv=await nameImg(list[i].nombre,m.ink);items.push({e:list[i],file:nameFile(list[i]),cv,ok:rs[i].ok})}
+  for(let i=0;i<list.length;i++){const cv=await nameImg(list[i].nombre,S.opts.mode);items.push({e:list[i],file:nameFile(list[i]),cv,ok:rs[i].ok})}
   const fontOk=items.every(i=>i.cv.fontOk);
   missingItems=items.filter(i=>!i.ok);
   items.sort((a,b)=>(a.ok===b.ok)?0:a.ok?1:-1);
